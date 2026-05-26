@@ -1,0 +1,200 @@
+.tokenStage {
+  height: calc(100vh - 92px);
+  max-width: 1480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) 420px;
+  gap: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(215, 225, 234, 0.13);
+  border-radius: 14px;
+  padding: 22px;
+  background:
+    radial-gradient(circle at 72% 18%, color-mix(in srgb, var(--agent-color) 18%, transparent), transparent 34%),
+    linear-gradient(145deg, rgba(8, 12, 16, 0.98), rgba(13, 18, 23, 0.96));
+}
+
+.pausedWorkbench,
+.restorePanel {
+  border: 1px solid rgba(215, 225, 234, 0.13);
+  border-radius: 12px;
+  background: rgba(15, 21, 27, 0.88);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+}
+
+.pausedWorkbench {
+  position: relative;
+  display: grid;
+  grid-template-rows: 62px 1fr auto;
+  overflow: hidden;
+  filter: saturate(0.45);
+}
+
+.pausedWorkbench header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border-bottom: 1px solid rgba(215, 225, 234, 0.1);
+  padding: 0 15px;
+}
+
+.pausedWorkbench header > span {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  color: #071014;
+  background: var(--agent-color);
+  font-weight: 850;
+}
+
+.pausedWorkbench strong,
+.pausedWorkbench small {
+  display: block;
+}
+
+.pausedWorkbench small {
+  margin-top: 3px;
+  color: #8f9eaa;
+}
+
+.pausedWorkbench em {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: auto;
+  color: #ffc9a8;
+  font-style: normal;
+}
+
+.frozenConsole {
+  display: grid;
+  align-content: end;
+  gap: 10px;
+  padding: 26px;
+  color: #c6d2dc;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.blink {
+  color: #ffc9a8;
+  animation: blink 0.8s infinite;
+}
+
+.emptyMeter {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  color: #c2ced8;
+}
+
+.emptyMeter i {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.emptyMeter b {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: #ffc9a8;
+}
+
+.pauseSeal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  color: #ffe2d1;
+  text-align: center;
+  background: rgba(5, 7, 9, 0.62);
+}
+
+.pauseSeal strong {
+  font-size: 28px;
+}
+
+.restorePanel {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+  padding: 28px;
+}
+
+.panelKicker,
+.factList span,
+.restorePanel button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panelKicker {
+  color: color-mix(in srgb, var(--agent-color) 76%, #ffffff);
+  font-size: 13px;
+}
+
+.restorePanel h1 {
+  margin: 0;
+  color: #f3f8fc;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.2;
+}
+
+.restorePanel p {
+  margin: 0;
+  color: #bbc9d4;
+  line-height: 1.7;
+}
+
+.factList {
+  display: grid;
+  gap: 10px;
+}
+
+.factList span {
+  border: 1px solid rgba(215, 225, 234, 0.11);
+  border-radius: 9px;
+  padding: 10px;
+  color: #d6e1e9;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.restorePanel button {
+  justify-self: start;
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 16px;
+  color: #071014;
+  background: var(--agent-color);
+  font-weight: 760;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 880px) {
+  .tokenStage {
+    height: calc(100vh - 110px);
+    grid-template-columns: 1fr;
+    overflow: auto;
+    padding: 14px;
+  }
+
+  .pausedWorkbench {
+    min-height: 420px;
+  }
+}

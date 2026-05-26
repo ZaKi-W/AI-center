@@ -1,0 +1,477 @@
+.simulator {
+  position: relative;
+  height: calc(100vh - 92px);
+  max-width: 1480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 240px minmax(390px, 1fr) 320px;
+  gap: 16px;
+}
+
+.productRail,
+.chatPanel,
+.contextPanel {
+  min-height: 0;
+  border: 1px solid rgba(215, 225, 234, 0.13);
+  border-radius: 10px;
+  background: rgba(13, 18, 23, 0.86);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.productRail {
+  padding: 14px;
+}
+
+.railHeader,
+.chatHeader,
+.fileWindow header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.railHeader {
+  justify-content: flex-start;
+  margin-bottom: 16px;
+  color: #cdd8e2;
+  font-size: 13px;
+}
+
+.productItem {
+  width: 100%;
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid rgba(218, 228, 238, 0.1);
+  border-radius: 8px;
+  color: #dbe5ec;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.035);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.productItem:hover,
+.productActive {
+  border-color: color-mix(in srgb, var(--accent) 72%, transparent);
+  background: color-mix(in srgb, var(--accent) 13%, rgba(255, 255, 255, 0.045));
+}
+
+.productActive {
+  transform: translateX(3px);
+}
+
+.productLogo {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  color: #061014;
+  background: var(--accent);
+  font-weight: 800;
+}
+
+.productItem strong,
+.productItem small {
+  display: block;
+}
+
+.productItem small {
+  margin-top: 3px;
+  color: #8e9daa;
+  font-size: 11px;
+}
+
+.chapterList {
+  margin-top: 18px;
+  display: grid;
+  gap: 7px;
+}
+
+.chapterList > span {
+  color: #81909d;
+  font-size: 12px;
+}
+
+.chapterList button {
+  border: 0;
+  border-radius: 7px;
+  padding: 8px 9px;
+  color: #8594a2;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.chapterList .chapterDone {
+  color: #e5eef5;
+  background: rgba(108, 151, 184, 0.16);
+}
+
+.chatPanel {
+  position: relative;
+  display: grid;
+  grid-template-rows: 54px 1fr auto;
+  overflow: hidden;
+}
+
+.chatPanelReceded {
+  transform: translateX(-12%) scale(0.86);
+  opacity: 0.42;
+  transition: 650ms ease;
+}
+
+.chatHeader {
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(215, 225, 234, 0.11);
+}
+
+.chatHeader > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.windowDots {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.windowDots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #d96f69;
+}
+
+.windowDots i:nth-child(2) {
+  background: #e0bd67;
+}
+
+.windowDots i:nth-child(3) {
+  background: #67c986;
+}
+
+.headerBadge {
+  border: 1px solid rgba(131, 183, 221, 0.22);
+  border-radius: 999px;
+  padding: 5px 9px;
+  color: #9dc4de;
+  background: rgba(86, 141, 180, 0.1);
+  font-size: 12px;
+}
+
+.messages {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+  padding: 18px 18px 8px;
+}
+
+.welcomeCard,
+.thinkingPill,
+.pendingUpload,
+.uploadChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.welcomeCard {
+  align-self: center;
+  padding: 9px 12px;
+  border: 1px solid rgba(215, 225, 234, 0.12);
+  border-radius: 999px;
+  color: #c8d6e0;
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 13px;
+}
+
+.message {
+  max-width: 78%;
+  border: 1px solid rgba(215, 225, 234, 0.1);
+  border-radius: 14px;
+  padding: 12px 14px;
+  line-height: 1.62;
+  font-size: 15px;
+}
+
+.message p {
+  margin: 0;
+}
+
+.user {
+  align-self: flex-end;
+  border-bottom-right-radius: 5px;
+  color: #061014;
+  background: #d7e8ef;
+}
+
+.assistant {
+  align-self: flex-start;
+  border-bottom-left-radius: 5px;
+  color: #deebf4;
+  background: rgba(35, 48, 58, 0.92);
+}
+
+.thinkingPill {
+  align-self: flex-start;
+  padding: 8px 11px;
+  border-radius: 999px;
+  color: #aab8c4;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 13px;
+}
+
+.thinkingPill span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #73d0a9;
+  box-shadow: 0 0 12px rgba(115, 208, 169, 0.8);
+}
+
+.inputDock {
+  padding: 12px 16px 16px;
+}
+
+.pendingUpload,
+.uploadChip {
+  margin-bottom: 8px;
+  border-radius: 8px;
+  padding: 7px 9px;
+  color: #bcd0dc;
+  background: rgba(96, 126, 148, 0.18);
+  font-size: 12px;
+}
+
+.inputBox {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid rgba(215, 225, 234, 0.16);
+  border-radius: 12px;
+  padding: 0 8px 0 15px;
+  color: #dbe6ee;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.inputBox button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  color: #071114;
+  background: #80d2b3;
+}
+
+.contextPanel {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 12px;
+  padding: 14px;
+}
+
+.capabilityCard {
+  display: grid;
+  gap: 8px;
+  padding: 13px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.capabilityCard span {
+  color: #8797a4;
+  font-size: 12px;
+}
+
+.capabilityCard strong {
+  color: #f3f7fa;
+  font-size: 19px;
+  line-height: 1.38;
+}
+
+.capabilityGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.capabilityGrid span {
+  border: 1px solid rgba(215, 225, 234, 0.1);
+  border-radius: 8px;
+  padding: 9px 10px;
+  color: #83919f;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.capabilityOn {
+  color: #dff4ec !important;
+  border-color: rgba(116, 214, 174, 0.22) !important;
+  background: rgba(85, 176, 139, 0.13) !important;
+}
+
+.capabilityWarn {
+  color: #ffd5bf !important;
+  border-color: rgba(246, 145, 91, 0.28) !important;
+  background: rgba(246, 145, 91, 0.12) !important;
+}
+
+.fileWindow {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(215, 225, 234, 0.12);
+  border-radius: 10px;
+  background: rgba(17, 24, 31, 0.9);
+}
+
+.fileWindow header {
+  padding: 12px;
+  border-bottom: 1px solid rgba(215, 225, 234, 0.1);
+}
+
+.fileWindow small {
+  color: #8796a4;
+}
+
+.fileList {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 8px;
+  padding: 10px;
+  color: #cdd8e2;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.fileBlocked {
+  filter: saturate(0.6);
+}
+
+.permissionOverlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  color: #ffe0d2;
+  text-align: center;
+  background: rgba(8, 10, 12, 0.72);
+}
+
+.permissionOverlay span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #f4b18e;
+  font-size: 12px;
+}
+
+.agentHook {
+  position: absolute;
+  inset: 10% 18%;
+  z-index: 8;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  border: 1px solid rgba(151, 206, 244, 0.2);
+  border-radius: 14px;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(18, 27, 36, 0.92), rgba(8, 11, 15, 0.95)),
+    radial-gradient(circle, rgba(124, 185, 229, 0.16), transparent);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.62);
+}
+
+.agentHook p,
+.agentHook strong {
+  margin: 0;
+}
+
+.agentHook p {
+  color: #c8d5df;
+  font-size: 26px;
+}
+
+.agentHook strong {
+  color: #f3f9ff;
+  font-size: 38px;
+}
+
+.agentHook button {
+  justify-self: center;
+  margin-top: 14px;
+  border: 0;
+  border-radius: 10px;
+  padding: 13px 18px;
+  color: #071014;
+  background: #91d8ff;
+  font-weight: 700;
+}
+
+.recordingMode .message,
+.recordingMode .inputBox {
+  font-size: 17px;
+}
+
+@media (max-width: 1080px) {
+  .simulator {
+    grid-template-columns: 190px minmax(360px, 1fr);
+  }
+
+  .contextPanel {
+    position: absolute;
+    right: 12px;
+    top: 72px;
+    bottom: 12px;
+    width: 284px;
+  }
+}
+
+@media (max-width: 760px) {
+  .simulator {
+    height: calc(100vh - 110px);
+    grid-template-columns: 1fr;
+  }
+
+  .productRail,
+  .contextPanel {
+    display: none;
+  }
+
+  .message {
+    max-width: 92%;
+  }
+
+  .agentHook {
+    inset: 8%;
+  }
+
+  .agentHook p {
+    font-size: 20px;
+  }
+
+  .agentHook strong {
+    font-size: 28px;
+  }
+}
