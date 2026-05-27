@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { RotateCcw, ScanLine, SkipForward } from 'lucide-react';
+import { Settings2, RotateCcw, SkipForward } from 'lucide-react';
 import { AgentSelect } from './components/AgentSelect';
 import { AgentWorkbench } from './components/AgentWorkbench';
 import { ChatbotSimulator } from './components/ChatbotSimulator';
 import { DimensionTransition } from './components/DimensionTransition';
+import { IntroScreen } from './components/IntroScreen';
 import { MCPDemo } from './components/MCPDemo';
 import { ModelSelect } from './components/ModelSelect';
 import { SkillDemo } from './components/SkillDemo';
@@ -14,10 +15,11 @@ import { appStages, defaultAgentId, defaultModelId, type AppStage } from './data
 import styles from './App.module.css';
 
 export default function App() {
-  const [stage, setStage] = useState<AppStage>('chatbot');
+  const [stage, setStage] = useState<AppStage>('intro');
   const [replayKey, setReplayKey] = useState(0);
   const [recordingMode, setRecordingMode] = useState(true);
-  const [playbackMode, setPlaybackMode] = useState<'auto' | 'manual'>('auto');
+  const [playbackMode, setPlaybackMode] = useState<'auto' | 'manual'>('manual');
+  const [controlsOpen, setControlsOpen] = useState(false);
   const [advanceSignal, setAdvanceSignal] = useState(0);
   const [selectedAgentId, setSelectedAgentId] = useState(defaultAgentId);
   const [selectedModelId, setSelectedModelId] = useState(defaultModelId);
@@ -25,7 +27,8 @@ export default function App() {
 
   const stageLabel = useMemo(() => {
     const labels: Record<AppStage, string> = {
-      chatbot: '01 ChatBot 幕',
+      intro: '00 开场',
+      chatbot: '01 聊天机器人(ChatBOT)',
       transition: '02 进入 Agent 世界',
       'agent-select': '03 Agent 选择',
       'model-select': '04 模型大脑',
@@ -39,7 +42,7 @@ export default function App() {
   }, [stage]);
 
   const replay = () => {
-    setStage('chatbot');
+    setStage('intro');
     setTokenRestored(false);
     setReplayKey((key) => key + 1);
   };
@@ -62,61 +65,81 @@ export default function App() {
 
   return (
     <main className={styles.appShell}>
-      <div className={styles.safeFrame} aria-hidden="true" />
       <header className={styles.toolbar}>
-        <div className={styles.brandBlock}>
-          <span className={styles.statusDot} />
-          <span>AI Workflow Demo</span>
-          <strong>{stageLabel}</strong>
-        </div>
-        <div className={styles.toolbarActions}>
-          <label className={styles.recordSwitch}>
-            <input
-              type="checkbox"
-              checked={recordingMode}
-              onChange={(event) => setRecordingMode(event.target.checked)}
-            />
-            录屏模式
-          </label>
-          <label className={styles.recordSwitch}>
-            <input
-              type="checkbox"
-              checked={playbackMode === 'manual'}
-              onChange={(event) => setPlaybackMode(event.target.checked ? 'manual' : 'auto')}
-            />
-            手动模式
-          </label>
-          {playbackMode === 'manual' ? (
-            <button type="button" className={styles.nextStepButton} onClick={advanceManualStep}>
-              下一步
-              <span>Space / Enter / →</span>
-            </button>
-          ) : null}
-          <button type="button" onClick={replay}>
-            <RotateCcw size={16} />
-            重播
+        <div className={styles.controlDock}>
+          <button
+            type="button"
+            className={styles.controlToggle}
+            onClick={() => setControlsOpen((open) => !open)}
+            aria-expanded={controlsOpen}
+          >
+            <Settings2 size={16} />
+            <span>控制</span>
           </button>
-          <button type="button" onClick={() => setStage('transition')}>
-            <SkipForward size={16} />
-            跳到转场
-          </button>
-          {appStages.slice(2).map((targetStage) => (
-            <button key={targetStage} type="button" onClick={() => setStage(targetStage)}>
-              {targetStage === 'agent-select'
-                ? 'Agent'
-                : targetStage === 'model-select'
-                  ? '模型'
-                  : targetStage === 'agent-workbench'
-                    ? '工作台'
-                    : targetStage === 'token-restore'
-                      ? 'Token'
-                      : targetStage === 'skill-demo'
-                        ? 'Skill'
-                        : targetStage === 'mcp-demo'
-                          ? 'MCP'
-                          : '总结'}
-            </button>
-          ))}
+          <AnimatePresence>
+            {controlsOpen ? (
+              <motion.div
+                className={styles.toolbarActions}
+                initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              >
+                <div className={styles.stageStatus}>
+                  <span className={styles.statusDot} />
+                  <strong>{stageLabel}</strong>
+                </div>
+                <label className={styles.recordSwitch}>
+                  <input
+                    type="checkbox"
+                    checked={recordingMode}
+                    onChange={(event) => setRecordingMode(event.target.checked)}
+                  />
+                  演示模式
+                </label>
+                <label className={styles.recordSwitch}>
+                  <input
+                    type="checkbox"
+                    checked={playbackMode === 'manual'}
+                    onChange={(event) => setPlaybackMode(event.target.checked ? 'manual' : 'auto')}
+                  />
+                  手动模式
+                </label>
+                {playbackMode === 'manual' ? (
+                  <button type="button" className={styles.nextStepButton} onClick={advanceManualStep}>
+                    下一步
+                    <span>Space / Enter / →</span>
+                  </button>
+                ) : null}
+                <button type="button" onClick={replay}>
+                  <RotateCcw size={16} />
+                  重播
+                </button>
+                <button type="button" onClick={() => setStage('transition')}>
+                  <SkipForward size={16} />
+                  跳到转场
+                </button>
+                <div className={styles.jumpGrid}>
+                  {appStages.filter((targetStage) => !['intro', 'chatbot', 'transition'].includes(targetStage)).map((targetStage) => (
+                    <button key={targetStage} type="button" onClick={() => setStage(targetStage)}>
+                      {targetStage === 'agent-select'
+                        ? 'Agent'
+                        : targetStage === 'model-select'
+                          ? '模型'
+                          : targetStage === 'agent-workbench'
+                            ? '工作台'
+                            : targetStage === 'token-restore'
+                              ? 'Token'
+                              : targetStage === 'skill-demo'
+                                ? 'Skill'
+                                : targetStage === 'mcp-demo'
+                                  ? 'MCP'
+                                  : '总结'}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
         </div>
       </header>
 
@@ -129,6 +152,13 @@ export default function App() {
           exit={{ opacity: 0, scale: 0.96, filter: 'blur(10px)' }}
           transition={{ duration: 0.45 }}
         >
+          {stage === 'intro' ? (
+            <IntroScreen
+              playbackMode={playbackMode}
+              advanceSignal={advanceSignal}
+              onStart={() => setStage('chatbot')}
+            />
+          ) : null}
           {stage === 'chatbot' ? (
             <ChatbotSimulator
               recordingMode={recordingMode}
@@ -214,11 +244,6 @@ export default function App() {
           ) : null}
         </motion.section>
       </AnimatePresence>
-
-      <div className={styles.scanBar}>
-        <ScanLine size={14} />
-        中央 9:16 裁切安全区已保留关键字幕与聊天主体
-      </div>
     </main>
   );
 }

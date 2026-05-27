@@ -38,7 +38,7 @@ export function AgentSelect({ selectedAgentId, playbackMode, advanceSignal, onSe
           Agent World
         </span>
         <h1>欢迎来到 Agent 的世界</h1>
-        <p>请选择你的 Agent。它们代表能接任务、拆步骤、调用工具并推进结果的执行形态。</p>
+        <p>下面这些就是 Agent：它们不是只负责聊天，而是可以接任务、拆步骤、调用工具并推进结果的 AI 执行助手。</p>
       </div>
 
       <div className={styles.agentGrid} aria-label="Agent 选择">
@@ -55,9 +55,19 @@ export function AgentSelect({ selectedAgentId, playbackMode, advanceSignal, onSe
               animate={isSelected ? { scale: 1.035 } : { scale: 1 }}
               transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             >
-              <span className={styles.agentBadge}>{agent.badge}</span>
+              <span className={`${styles.agentLogo} ${styles[agent.logoShape]}`} aria-hidden="true">
+                <b>{agent.logoMark}</b>
+                <i>{agent.badge}</i>
+              </span>
               <strong>{agent.name}</strong>
+              <small className={styles.agentIntro}>{agent.shortIntro}</small>
               <p>{agent.description}</p>
+              <span className={styles.popularity}>
+                <em>{agent.popularityLabel}</em>
+                <i>
+                  <b style={{ width: `${agent.popularity}%` }} />
+                </i>
+              </span>
               <span className={styles.tagList}>
                 {agent.tags.map((tag) => (
                   <i key={tag}>{tag}</i>

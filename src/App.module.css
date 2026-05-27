@@ -8,44 +8,23 @@
     linear-gradient(145deg, #080c10 0%, #101820 46%, #080a0c 100%);
 }
 
-.safeFrame {
-  position: absolute;
-  inset: 58px calc(50% - min(28.125vw, 215px)) 34px;
-  border-left: 1px dashed rgba(232, 237, 242, 0.18);
-  border-right: 1px dashed rgba(232, 237, 242, 0.18);
-  pointer-events: none;
-  z-index: 4;
-}
-
 .toolbar {
-  position: relative;
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
   z-index: 6;
-  height: 54px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 18px;
-  border-bottom: 1px solid rgba(210, 219, 228, 0.12);
-  background: rgba(8, 12, 16, 0.78);
-  backdrop-filter: blur(18px);
+  justify-content: center;
+  pointer-events: none;
 }
 
-.brandBlock,
-.toolbarActions,
-.scanBar {
+.toolbarActions {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.brandBlock {
-  color: #dfe7ed;
-  font-size: 13px;
-}
-
-.brandBlock strong {
-  color: #8fc8ff;
-  font-weight: 650;
 }
 
 .statusDot {
@@ -56,6 +35,12 @@
   box-shadow: 0 0 16px rgba(98, 214, 167, 0.72);
 }
 
+.controlDock {
+  position: relative;
+  pointer-events: auto;
+}
+
+.controlToggle,
 .toolbarActions button,
 .recordSwitch {
   height: 32px;
@@ -67,6 +52,63 @@
   border-radius: 8px;
   color: #d9e3eb;
   background: rgba(255, 255, 255, 0.055);
+}
+
+.controlToggle {
+  width: 42px;
+  height: 42px;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(8, 12, 16, 0.64) !important;
+  backdrop-filter: blur(16px);
+}
+
+.controlToggle span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.toolbarActions {
+  position: absolute;
+  right: 0;
+  bottom: 52px;
+  width: 310px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  padding: 12px;
+  border: 1px solid rgba(216, 226, 235, 0.14);
+  border-radius: 12px;
+  background: rgba(8, 12, 16, 0.86);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+}
+
+.stageStatus {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 30px;
+  color: #8fc8ff;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.toolbarActions > button,
+.toolbarActions > label {
+  justify-content: center;
+}
+
+.jumpGrid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
 }
 
 .recordSwitch input {
@@ -87,44 +129,22 @@
 
 .stage {
   position: absolute;
-  inset: 54px 0 0;
+  inset: 0;
   padding: 22px;
-}
-
-.scanBar {
-  position: absolute;
-  left: 50%;
-  bottom: 10px;
-  z-index: 6;
-  transform: translateX(-50%);
-  padding: 7px 12px;
-  border: 1px solid rgba(143, 200, 255, 0.18);
-  border-radius: 999px;
-  color: #aebcc8;
-  background: rgba(8, 12, 16, 0.72);
-  font-size: 12px;
 }
 
 @media (max-width: 860px) {
   .toolbar {
-    height: auto;
-    min-height: 54px;
-    gap: 10px;
-    flex-wrap: wrap;
-    padding-block: 9px;
+    right: 10px;
+    bottom: 10px;
   }
 
   .toolbarActions {
-    overflow-x: auto;
-    width: 100%;
+    width: min(310px, calc(100vw - 20px));
   }
 
   .stage {
-    inset-block-start: 92px;
     padding: 10px;
   }
 
-  .scanBar {
-    display: none;
-  }
 }

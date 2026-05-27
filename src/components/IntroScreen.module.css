@@ -1,0 +1,110 @@
+.introStage {
+  height: calc(100vh - 92px);
+  max-width: 1480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) 360px;
+  gap: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(215, 225, 234, 0.13);
+  border-radius: 14px;
+  padding: 28px;
+  background:
+    radial-gradient(circle at 34% 18%, rgba(145, 216, 255, 0.18), transparent 36%),
+    linear-gradient(145deg, rgba(8, 12, 16, 0.98), rgba(13, 18, 23, 0.96));
+}
+
+.heroPanel,
+.flowPreview {
+  border: 1px solid rgba(215, 225, 234, 0.13);
+  border-radius: 12px;
+  background: rgba(16, 22, 28, 0.86);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+}
+
+.heroPanel {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 18px;
+  padding: clamp(28px, 5vw, 72px);
+}
+
+.kicker,
+.flowPreview > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #91d8ff;
+  font-size: 13px;
+}
+
+.heroPanel h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #f3f8fc;
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.heroPanel p {
+  max-width: 720px;
+  margin: 0;
+  color: #b9c8d3;
+  font-size: 20px;
+  line-height: 1.75;
+}
+
+.heroPanel button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: #071014;
+  background: #91d8ff;
+  font-weight: 800;
+}
+
+.heroPanel small {
+  color: #8fa0ad;
+}
+
+.flowPreview {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  padding: 22px;
+}
+
+.flowPreview div {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(215, 225, 234, 0.1);
+  border-radius: 9px;
+  padding: 11px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.flowPreview i {
+  color: #91d8ff;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.flowPreview strong {
+  color: #e5eef5;
+}
+
+@media (max-width: 860px) {
+  .introStage {
+    height: calc(100vh - 110px);
+    grid-template-columns: 1fr;
+    overflow: auto;
+    padding: 14px;
+  }
+}

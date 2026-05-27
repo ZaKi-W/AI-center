@@ -1,4 +1,5 @@
 export type AppStage =
+  | 'intro'
   | 'chatbot'
   | 'transition'
   | 'agent-select'
@@ -35,13 +36,23 @@ export type AgentOption = {
   tags: string[];
   themeColor: string;
   description: string;
+  shortIntro: string;
+  popularity: number;
+  popularityLabel: string;
   badge: string;
+  logoMark: string;
+  logoShape: 'circle' | 'diamond' | 'hex' | 'bracket' | 'orbit';
   logVoice: string;
 };
 
 export type ModelOption = {
   id: string;
   name: string;
+  provider: string;
+  region: '国内' | '国外';
+  logoMark: string;
+  rank: number;
+  rankNote: string;
   positioning: string;
   strengths: string[];
   bars: {
@@ -111,6 +122,7 @@ export type SummaryItem = {
 };
 
 export const appStages: AppStage[] = [
+  'intro',
   'chatbot',
   'transition',
   'agent-select',
@@ -122,7 +134,7 @@ export const appStages: AppStage[] = [
   'summary',
 ];
 export const defaultAgentId = 'codex';
-export const defaultModelId = 'gpt-55';
+export const defaultModelId = 'gpt-52';
 
 export const bannedPlatformTerms = [
   '充值',
@@ -150,7 +162,12 @@ export const agentOptions: AgentOption[] = [
     tags: ['项目理解', '长上下文', '代码执行'],
     themeColor: '#d5a46f',
     description: '适合把项目结构、需求和代码任务串起来分析。',
+    shortIntro: '偏代码项目助手，擅长读项目、改代码、解释工程问题。',
+    popularity: 92,
+    popularityLabel: '热门',
     badge: 'CC',
+    logoMark: 'C',
+    logoShape: 'bracket',
     logVoice: '我会先读懂项目，再拆成可执行步骤。',
   },
   {
@@ -159,7 +176,12 @@ export const agentOptions: AgentOption[] = [
     tags: ['代码任务', '工程执行', '自动修复'],
     themeColor: '#7cc7ff',
     description: '适合把明确任务推进成文件、命令和检查结果。',
+    shortIntro: '偏工程执行助手，擅长把需求落到文件修改和命令验证。',
+    popularity: 96,
+    popularityLabel: '很热门',
     badge: 'CX',
+    logoMark: '⌘',
+    logoShape: 'orbit',
     logVoice: '我会按任务清单执行，并把每一步结果记录下来。',
   },
   {
@@ -168,7 +190,12 @@ export const agentOptions: AgentOption[] = [
     tags: ['工具操作', '抓取执行', '自动化'],
     themeColor: '#8fdbb7',
     description: '适合跨窗口、跨工具完成结构化操作。',
+    shortIntro: '偏自动化助手，适合连接工具、处理重复操作和资料抓取。',
+    popularity: 68,
+    popularityLabel: '小众上升',
     badge: 'OC',
+    logoMark: 'O',
+    logoShape: 'hex',
     logVoice: '我会连接可用工具，把重复动作自动化。',
   },
   {
@@ -177,7 +204,12 @@ export const agentOptions: AgentOption[] = [
     tags: ['流程执行', '多步骤任务', '助手形态'],
     themeColor: '#b6a7ff',
     description: '适合把一个目标拆成连续流程并持续推进。',
+    shortIntro: '偏流程型助手，适合把一个大目标拆成连续任务推进。',
+    popularity: 62,
+    popularityLabel: '探索中',
     badge: 'HA',
+    logoMark: 'H',
+    logoShape: 'diamond',
     logVoice: '我会保持任务上下文，逐步推进流程。',
   },
   {
@@ -186,46 +218,160 @@ export const agentOptions: AgentOption[] = [
     tags: ['开发协作', '项目任务', 'IDE 助手'],
     themeColor: '#f0c66a',
     description: '适合贴近开发环境完成项目协作任务。',
+    shortIntro: '偏 IDE 协作助手，适合在开发环境里边看边改项目。',
+    popularity: 84,
+    popularityLabel: '热门上升',
     badge: 'TS',
+    logoMark: 'T',
+    logoShape: 'circle',
     logVoice: '我会围绕项目任务给出可见的执行反馈。',
   },
 ];
 
 export const modelOptions: ModelOption[] = [
   {
-    id: 'gpt-55',
-    name: 'GPT5.5',
+    id: 'gpt-52',
+    name: 'GPT-5.2',
+    provider: 'OpenAI',
+    region: '国外',
+    logoMark: '◎',
+    rank: 1,
+    rankNote: '综合旗舰参考',
     positioning: '综合能力强，适合复杂推理和通用任务演示。',
     strengths: ['复杂推理', '通用生成', '多步骤规划'],
     bars: { reasoning: 96, coding: 92, multimodal: 90, speed: 82 },
   },
   {
-    id: 'opus-47',
-    name: 'Opus4.7',
+    id: 'opus-45',
+    name: 'Claude Opus 4.5',
+    provider: 'Anthropic',
+    region: '国外',
+    logoMark: 'A',
+    rank: 2,
+    rankNote: '长上下文旗舰参考',
     positioning: '长文档理解强，适合项目分析和写作演示。',
     strengths: ['长上下文', '写作润色', '需求理解'],
     bars: { reasoning: 93, coding: 86, multimodal: 78, speed: 76 },
   },
   {
-    id: 'glm-51',
-    name: 'GLM5.1',
-    positioning: '中文场景友好，适合本土化工作流演示。',
-    strengths: ['中文表达', '结构总结', '任务规划'],
-    bars: { reasoning: 88, coding: 82, multimodal: 78, speed: 88 },
+    id: 'gemini-31-pro',
+    name: 'Gemini 3.1 Pro',
+    provider: 'Google',
+    region: '国外',
+    logoMark: 'G',
+    rank: 3,
+    rankNote: '多模态旗舰参考',
+    positioning: '多模态和资料理解突出，适合跨内容任务演示。',
+    strengths: ['多模态', '资料整理', '跨内容理解'],
+    bars: { reasoning: 90, coding: 84, multimodal: 96, speed: 80 },
   },
   {
-    id: 'deepseek-v4-pro',
-    name: 'DeepSeekV4Pro',
+    id: 'grok-43',
+    name: 'Grok 4.3',
+    provider: 'xAI',
+    region: '国外',
+    logoMark: 'x',
+    rank: 4,
+    rankNote: '实时与推理参考',
+    positioning: '适合信息密集、推理和快速资料问答演示。',
+    strengths: ['实时信息', '推理问答', '快速生成'],
+    bars: { reasoning: 91, coding: 84, multimodal: 82, speed: 88 },
+  },
+  {
+    id: 'llama-4',
+    name: 'Llama 4',
+    provider: 'Meta',
+    region: '国外',
+    logoMark: '∞',
+    rank: 5,
+    rankNote: '开源生态参考',
+    positioning: '开源生态影响力强，适合解释模型部署和生态差异。',
+    strengths: ['开源生态', '部署灵活', '通用生成'],
+    bars: { reasoning: 86, coding: 82, multimodal: 76, speed: 86 },
+  },
+  {
+    id: 'mistral-large-3',
+    name: 'Mistral Large 3',
+    provider: 'Mistral AI',
+    region: '国外',
+    logoMark: 'M',
+    rank: 6,
+    rankNote: '欧洲旗舰参考',
+    positioning: '适合展示企业级、低延迟和欧洲模型生态。',
+    strengths: ['企业场景', '低延迟', '多语种'],
+    bars: { reasoning: 85, coding: 83, multimodal: 74, speed: 90 },
+  },
+  {
+    id: 'deepseek-v32',
+    name: 'DeepSeek V3.2',
+    provider: 'DeepSeek',
+    region: '国内',
+    logoMark: 'D',
+    rank: 7,
+    rankNote: '推理与代码演示参考',
     positioning: '代码和推理表现突出，适合工程任务演示。',
     strengths: ['代码理解', '推理拆解', '终端任务'],
     bars: { reasoning: 94, coding: 95, multimodal: 72, speed: 84 },
   },
   {
-    id: 'gemini-31-pro',
-    name: 'Gemini3.1 Pro',
-    positioning: '多模态和资料理解突出，适合跨内容任务演示。',
-    strengths: ['多模态', '资料整理', '跨内容理解'],
-    bars: { reasoning: 90, coding: 84, multimodal: 96, speed: 80 },
+    id: 'qwen-35-max',
+    name: 'Qwen3.5 Max',
+    provider: 'Alibaba',
+    region: '国内',
+    logoMark: 'Q',
+    rank: 8,
+    rankNote: '中文与开源生态参考',
+    positioning: '中文能力和工具生态完整，适合本土业务工作流演示。',
+    strengths: ['中文业务', '工具调用', '开源生态'],
+    bars: { reasoning: 90, coding: 88, multimodal: 82, speed: 86 },
+  },
+  {
+    id: 'kimi-k26',
+    name: 'Kimi K2.6',
+    provider: 'Moonshot AI',
+    region: '国内',
+    logoMark: 'K',
+    rank: 9,
+    rankNote: '长文本与资料处理参考',
+    positioning: '适合长资料阅读、报告总结和复杂材料整理。',
+    strengths: ['长文本', '资料总结', '中文写作'],
+    bars: { reasoning: 88, coding: 82, multimodal: 78, speed: 84 },
+  },
+  {
+    id: 'glm-51',
+    name: 'GLM-5.1',
+    provider: 'Zhipu AI',
+    region: '国内',
+    logoMark: '智',
+    rank: 10,
+    rankNote: '中文与综合演示参考',
+    positioning: '中文场景友好，适合本土化工作流演示。',
+    strengths: ['中文表达', '结构总结', '任务规划'],
+    bars: { reasoning: 88, coding: 82, multimodal: 78, speed: 88 },
+  },
+  {
+    id: 'ernie-51',
+    name: 'ERNIE 5.1',
+    provider: 'Baidu',
+    region: '国内',
+    logoMark: '文',
+    rank: 11,
+    rankNote: '搜索与知识增强参考',
+    positioning: '适合知识问答、资料检索和中文内容生产演示。',
+    strengths: ['知识问答', '检索增强', '中文内容'],
+    bars: { reasoning: 86, coding: 78, multimodal: 80, speed: 86 },
+  },
+  {
+    id: 'seed-18',
+    name: 'Seed 1.8',
+    provider: 'ByteDance',
+    region: '国内',
+    logoMark: '豆',
+    rank: 12,
+    rankNote: '产品生态参考',
+    positioning: '适合展示面向应用生态的多场景通用模型。',
+    strengths: ['应用生态', '多场景', '中文交互'],
+    bars: { reasoning: 84, coding: 78, multimodal: 84, speed: 88 },
   },
 ];
 
@@ -302,7 +448,7 @@ export const tokenDemo: TokenDemo = {
 
 export const skillDemo: SkillDemo = {
   title: '选择一个专业 Skill',
-  prompt: '帮我优化这段抖音口播稿，让它更适合短视频开头。',
+  prompt: '帮我优化这段短视频口播稿，让它更适合开头。',
   selectedSkillId: 'short-video-script',
   skills: [
     { id: 'short-video-script', name: '短视频口播优化 Skill' },
@@ -312,7 +458,7 @@ export const skillDemo: SkillDemo = {
   ],
   plainResult: {
     title: '普通输出',
-    content: '大家好，今天我们来聊一聊 ChatBot 和 Agent 的区别。ChatBot 可以回答问题，Agent 可以执行任务。',
+    content: '大家好，今天我们来聊一聊聊天机器人(ChatBOT)和 Agent 的区别。聊天机器人(ChatBOT)可以回答问题，Agent 可以执行任务。',
     tags: ['语言泛泛', '开头不够抓人', '缺少短视频钩子'],
   },
   skilledResult: {
@@ -338,7 +484,7 @@ export const mcpDemo: MCPDemo = {
 };
 
 export const summaryItems: SummaryItem[] = [
-  { term: 'ChatBot', description: '负责对话。' },
+  { term: '聊天机器人(ChatBOT)', description: '负责对话。' },
   { term: 'Agent', description: '负责执行任务。' },
   { term: 'Model', description: '负责理解和生成。' },
   { term: 'Token', description: 'AI 工作时消耗的单位。' },
@@ -348,8 +494,8 @@ export const summaryItems: SummaryItem[] = [
 
 export const stageSubtitles = [
   '先从你最熟悉的聊天 AI 开始。',
-  '这类聊天 AI，就是 ChatBot。',
-  'ChatBot 会回答，也能理解图片。',
+  '这类聊天 AI，就是聊天机器人(ChatBOT)。',
+  '聊天机器人(ChatBOT)会回答，也能理解图片。',
   '但它不能直接替你操作电脑。',
   '你需要更高维度的力量。',
 ];
@@ -360,7 +506,7 @@ export const chatScript: ChatScriptStep[] = [
     kind: 'qa',
     prompt: '用大白话解释一下什么是 AI Agent。',
     reply: '可以把 Agent 理解成会自己拆步骤、尝试完成任务的 AI 助手。',
-    caption: 'ChatBot 擅长把问题讲清楚。',
+    caption: '聊天机器人(ChatBOT)擅长把问题讲清楚。',
     thinkingStates: ['思考中...', '正在组织解释方式...'],
   },
   {
@@ -376,7 +522,7 @@ export const chatScript: ChatScriptStep[] = [
     id: 'thinking-demo',
     kind: 'thinking',
     prompt: '帮我规划一下今天学习 AI 的顺序。',
-    reply: '建议先理解 ChatBot，再认识 Agent，然后看 Model、Token、Skill 和 MCP 如何组成完整工作流。',
+    reply: '建议先理解聊天机器人(ChatBOT)，再认识 Agent，然后看 Model、Token、Skill 和 MCP 如何组成完整工作流。',
     caption: '思考状态让生成过程更像真实产品。',
     thinkingStates: ['正在拆解任务...', '生成学习路径...', '压缩成口播节奏...'],
   },
@@ -384,8 +530,8 @@ export const chatScript: ChatScriptStep[] = [
     id: 'file-boundary',
     kind: 'boundary',
     prompt: '帮我把桌面上的报名表按班级分类，重命名后放进文件夹。',
-    reply: '我可以告诉你怎么整理，但我不能直接操作你的本地电脑文件。',
-    caption: 'ChatBot 能给建议，不能接管本地文件。',
+    reply: '不支持操作文件，但我可以告诉你怎么做。',
+    caption: '聊天机器人(ChatBOT)能给建议，不能接管本地文件。',
     thinkingStates: ['尝试理解文件任务...', '检查可执行权限...'],
   },
   {

@@ -168,7 +168,7 @@ describe('demo content contract', () => {
 
   it('summarizes the full concept chain in order', () => {
     expect(summaryItems.map((item) => item.term)).toEqual([
-      'ChatBot',
+      '聊天机器人(ChatBOT)',
       'Agent',
       'Model',
       'Token',

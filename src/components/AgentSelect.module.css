@@ -55,10 +55,10 @@
 
 .agentCard {
   position: relative;
-  min-height: 250px;
+  min-height: 300px;
   display: grid;
   align-content: start;
-  gap: 12px;
+  gap: 10px;
   border: 1px solid rgba(219, 229, 238, 0.12);
   border-radius: 10px;
   padding: 16px;
@@ -93,15 +93,72 @@
   box-shadow: 0 22px 70px color-mix(in srgb, var(--agent-color) 18%, transparent);
 }
 
-.agentBadge {
-  width: 46px;
-  height: 46px;
+.agentLogo {
+  width: 62px;
+  height: 62px;
   display: grid;
   place-items: center;
-  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--agent-color) 55%, rgba(255, 255, 255, 0.18));
   color: #071014;
-  background: var(--agent-color);
-  font-weight: 850;
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.92), transparent 22%),
+    var(--agent-color);
+  box-shadow: 0 16px 42px color-mix(in srgb, var(--agent-color) 26%, transparent);
+}
+
+.agentLogo b {
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.agentLogo i {
+  position: absolute;
+  right: 13px;
+  top: 13px;
+  border-radius: 999px;
+  padding: 2px 5px;
+  color: #dce8ef;
+  background: rgba(5, 9, 12, 0.74);
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.diamond {
+  border-radius: 15px;
+  transform: rotate(45deg);
+}
+
+.diamond b,
+.diamond i {
+  transform: rotate(-45deg);
+}
+
+.hex {
+  clip-path: polygon(24% 4%, 76% 4%, 100% 50%, 76% 96%, 24% 96%, 0 50%);
+}
+
+.bracket {
+  border-radius: 18px 8px 18px 8px;
+}
+
+.orbit {
+  border-radius: 50%;
+}
+
+.orbit::after {
+  content: "";
+  position: absolute;
+  width: 74px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 50%;
+  transform: rotate(-24deg);
 }
 
 .agentCard strong {
@@ -112,6 +169,38 @@
   margin: 0;
   color: #aebdca;
   line-height: 1.55;
+}
+
+.agentIntro {
+  color: #f1f6fa;
+  line-height: 1.45;
+  font-size: 13px;
+}
+
+.popularity {
+  display: grid;
+  gap: 6px;
+}
+
+.popularity em {
+  color: color-mix(in srgb, var(--agent-color) 82%, #ffffff);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.popularity i {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.popularity b {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--agent-color);
 }
 
 .tagList {

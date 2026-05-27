@@ -4,11 +4,10 @@
   max-width: 1480px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 240px minmax(390px, 1fr) 320px;
+  grid-template-columns: minmax(520px, 1fr) 340px;
   gap: 16px;
 }
 
-.productRail,
 .chatPanel,
 .contextPanel {
   min-height: 0;
@@ -19,100 +18,65 @@
   backdrop-filter: blur(18px);
 }
 
-.productRail {
-  padding: 14px;
+.capabilityOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(3, 6, 9, 0.78);
+  backdrop-filter: blur(7px);
 }
 
-.railHeader,
+.capabilityOverlayCard {
+  width: min(980px, 92%);
+  display: grid;
+  gap: 18px;
+  border: 1px solid rgba(145, 216, 255, 0.3);
+  border-radius: 18px;
+  padding: clamp(28px, 6vw, 70px);
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(145, 216, 255, 0.18), transparent 52%),
+    rgba(9, 15, 20, 0.96);
+  box-shadow: 0 34px 120px rgba(0, 0, 0, 0.58);
+}
+
+.capabilityOverlayCard span {
+  color: #f3f8fc;
+  font-size: clamp(42px, 7vw, 88px);
+  font-weight: 900;
+  line-height: 1.06;
+}
+
+.capabilityOverlayCard strong {
+  color: #c7d7e2;
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.5;
+}
+
+.capabilityOverlayWarning {
+  background: rgba(9, 4, 3, 0.82);
+}
+
+.capabilityOverlayWarning .capabilityOverlayCard {
+  border-color: rgba(255, 166, 122, 0.48);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 132, 92, 0.24), transparent 52%),
+    rgba(18, 10, 8, 0.97);
+}
+
+.capabilityOverlayWarning .capabilityOverlayCard span {
+  color: #ffe1d2;
+}
+
 .chatHeader,
 .fileWindow header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-}
-
-.railHeader {
-  justify-content: flex-start;
-  margin-bottom: 16px;
-  color: #cdd8e2;
-  font-size: 13px;
-}
-
-.productItem {
-  width: 100%;
-  display: flex;
-  gap: 11px;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid rgba(218, 228, 238, 0.1);
-  border-radius: 8px;
-  color: #dbe5ec;
-  text-align: left;
-  background: rgba(255, 255, 255, 0.035);
-  transition:
-    border-color 180ms ease,
-    background 180ms ease,
-    transform 180ms ease;
-}
-
-.productItem:hover,
-.productActive {
-  border-color: color-mix(in srgb, var(--accent) 72%, transparent);
-  background: color-mix(in srgb, var(--accent) 13%, rgba(255, 255, 255, 0.045));
-}
-
-.productActive {
-  transform: translateX(3px);
-}
-
-.productLogo {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  border-radius: 8px;
-  color: #061014;
-  background: var(--accent);
-  font-weight: 800;
-}
-
-.productItem strong,
-.productItem small {
-  display: block;
-}
-
-.productItem small {
-  margin-top: 3px;
-  color: #8e9daa;
-  font-size: 11px;
-}
-
-.chapterList {
-  margin-top: 18px;
-  display: grid;
-  gap: 7px;
-}
-
-.chapterList > span {
-  color: #81909d;
-  font-size: 12px;
-}
-
-.chapterList button {
-  border: 0;
-  border-radius: 7px;
-  padding: 8px 9px;
-  color: #8594a2;
-  text-align: left;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.chapterList .chapterDone {
-  color: #e5eef5;
-  background: rgba(108, 151, 184, 0.16);
 }
 
 .chatPanel {
@@ -173,8 +137,23 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 18px 18px 8px;
+  scroll-behavior: smooth;
+}
+
+.messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(215, 225, 234, 0.2);
 }
 
 .welcomeCard,
@@ -436,7 +415,7 @@
 
 @media (max-width: 1080px) {
   .simulator {
-    grid-template-columns: 190px minmax(360px, 1fr);
+    grid-template-columns: minmax(360px, 1fr);
   }
 
   .contextPanel {
@@ -454,7 +433,6 @@
     grid-template-columns: 1fr;
   }
 
-  .productRail,
   .contextPanel {
     display: none;
   }
