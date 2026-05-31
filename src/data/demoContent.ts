@@ -132,7 +132,7 @@ export const appStages: AppStage[] = [
   'summary',
 ];
 export const defaultAgentId = 'codex';
-export const defaultModelId = 'gpt-52';
+export const defaultModelId = 'gpt-55';
 
 export const bannedPlatformTerms = [
   '充值',
@@ -228,40 +228,40 @@ export const agentOptions: AgentOption[] = [
 
 export const modelOptions: ModelOption[] = [
   {
-    id: 'gpt-52',
-    name: 'GPT-5.2',
+    id: 'gpt-55',
+    name: 'GPT-5.5',
     provider: 'OpenAI',
     region: '国外',
     logoMark: '◎',
     rank: 1,
     rankNote: '综合旗舰参考',
-    positioning: '综合能力强，适合复杂推理和通用任务演示。',
+    positioning: '综合能力极强，适合复杂推理、超级通用智能和全自动规划。',
     strengths: ['复杂推理', '通用生成', '多步骤规划'],
-    bars: { reasoning: 96, coding: 92, multimodal: 90, speed: 82 },
+    bars: { reasoning: 99, coding: 98, multimodal: 96, speed: 90 },
   },
   {
-    id: 'opus-45',
-    name: 'Claude Opus 4.5',
+    id: 'opus-48',
+    name: 'Claude Opus 4.8',
     provider: 'Anthropic',
     region: '国外',
     logoMark: 'A',
     rank: 2,
     rankNote: '长上下文旗舰参考',
-    positioning: '长文档理解强，适合项目分析和写作演示。',
-    strengths: ['长上下文', '写作润色', '需求理解'],
-    bars: { reasoning: 93, coding: 86, multimodal: 78, speed: 76 },
+    positioning: '长文档深度理解极强，适合超大规模项目分析与文学写作。',
+    strengths: ['超长上下文', '需求深度理解', '代码编写'],
+    bars: { reasoning: 98, coding: 97, multimodal: 88, speed: 85 },
   },
   {
-    id: 'gemini-31-pro',
-    name: 'Gemini 3.1 Pro',
+    id: 'gemini-35-flash',
+    name: 'Gemini 3.5 Flash',
     provider: 'Google',
     region: '国外',
     logoMark: 'G',
     rank: 3,
-    rankNote: '多模态旗舰参考',
-    positioning: '多模态和资料理解突出，适合跨内容任务演示。',
-    strengths: ['多模态', '资料整理', '跨内容理解'],
-    bars: { reasoning: 90, coding: 84, multimodal: 96, speed: 80 },
+    rankNote: '多模态与极速旗舰',
+    positioning: '极致响应速度，在复杂多模态任务和高并发指令理解中表现卓越。',
+    strengths: ['超强多模态', '极致速度', '跨内容理解'],
+    bars: { reasoning: 94, coding: 90, multimodal: 98, speed: 98 },
   },
   {
     id: 'grok-43',
@@ -273,7 +273,7 @@ export const modelOptions: ModelOption[] = [
     rankNote: '实时与推理参考',
     positioning: '适合信息密集、推理和快速资料问答演示。',
     strengths: ['实时信息', '推理问答', '快速生成'],
-    bars: { reasoning: 91, coding: 84, multimodal: 82, speed: 88 },
+    bars: { reasoning: 95, coding: 90, multimodal: 86, speed: 92 },
   },
   {
     id: 'llama-4',
@@ -285,7 +285,7 @@ export const modelOptions: ModelOption[] = [
     rankNote: '开源生态参考',
     positioning: '开源生态影响力强，适合解释模型部署和生态差异。',
     strengths: ['开源生态', '部署灵活', '通用生成'],
-    bars: { reasoning: 86, coding: 82, multimodal: 76, speed: 86 },
+    bars: { reasoning: 91, coding: 88, multimodal: 82, speed: 90 },
   },
   {
     id: 'mistral-large-3',
@@ -297,19 +297,19 @@ export const modelOptions: ModelOption[] = [
     rankNote: '欧洲旗舰参考',
     positioning: '适合展示企业级、低延迟和欧洲模型生态。',
     strengths: ['企业场景', '低延迟', '多语种'],
-    bars: { reasoning: 85, coding: 83, multimodal: 74, speed: 90 },
+    bars: { reasoning: 88, coding: 86, multimodal: 78, speed: 92 },
   },
   {
-    id: 'deepseek-v32',
-    name: 'DeepSeek V3.2',
+    id: 'deepseek-v4pro',
+    name: 'DeepSeek V4Pro',
     provider: 'DeepSeek',
     region: '国内',
     logoMark: 'D',
     rank: 7,
-    rankNote: '推理与代码演示参考',
-    positioning: '代码和推理表现突出，适合工程任务演示。',
-    strengths: ['代码理解', '推理拆解', '终端任务'],
-    bars: { reasoning: 94, coding: 95, multimodal: 72, speed: 84 },
+    rankNote: '国内超强推理参考',
+    positioning: '全方位超越同类模型的重磅旗舰，深度逻辑推理与代码开发首选。',
+    strengths: ['代码理解', '逻辑推理', '超高性价比'],
+    bars: { reasoning: 98, coding: 98, multimodal: 88, speed: 90 },
   },
   {
     id: 'qwen-35-max',
@@ -321,7 +321,7 @@ export const modelOptions: ModelOption[] = [
     rankNote: '中文与开源生态参考',
     positioning: '中文能力和工具生态完整，适合本土业务工作流演示。',
     strengths: ['中文业务', '工具调用', '开源生态'],
-    bars: { reasoning: 90, coding: 88, multimodal: 82, speed: 86 },
+    bars: { reasoning: 95, coding: 92, multimodal: 86, speed: 90 },
   },
   {
     id: 'kimi-k26',
@@ -333,7 +333,7 @@ export const modelOptions: ModelOption[] = [
     rankNote: '长文本与资料处理参考',
     positioning: '适合长资料阅读、报告总结和复杂材料整理。',
     strengths: ['长文本', '资料总结', '中文写作'],
-    bars: { reasoning: 88, coding: 82, multimodal: 78, speed: 84 },
+    bars: { reasoning: 94, coding: 86, multimodal: 82, speed: 88 },
   },
   {
     id: 'glm-51',
@@ -345,7 +345,7 @@ export const modelOptions: ModelOption[] = [
     rankNote: '中文与综合演示参考',
     positioning: '中文场景友好，适合本土化工作流演示。',
     strengths: ['中文表达', '结构总结', '任务规划'],
-    bars: { reasoning: 88, coding: 82, multimodal: 78, speed: 88 },
+    bars: { reasoning: 92, coding: 86, multimodal: 84, speed: 90 },
   },
   {
     id: 'ernie-51',
@@ -357,7 +357,7 @@ export const modelOptions: ModelOption[] = [
     rankNote: '搜索与知识增强参考',
     positioning: '适合知识问答、资料检索和中文内容生产演示。',
     strengths: ['知识问答', '检索增强', '中文内容'],
-    bars: { reasoning: 86, coding: 78, multimodal: 80, speed: 86 },
+    bars: { reasoning: 90, coding: 82, multimodal: 84, speed: 88 },
   },
   {
     id: 'seed-18',
@@ -369,8 +369,8 @@ export const modelOptions: ModelOption[] = [
     rankNote: '产品生态参考',
     positioning: '适合展示面向应用生态的多场景通用模型。',
     strengths: ['应用生态', '多场景', '中文交互'],
-    bars: { reasoning: 84, coding: 78, multimodal: 84, speed: 88 },
-  },
+    bars: { reasoning: 88, coding: 82, multimodal: 88, speed: 96 },
+  }
 ];
 
 export const fileTaskSteps: FileTaskStep[] = [

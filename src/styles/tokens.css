@@ -1,39 +1,56 @@
 :root {
-  /* Color palette - Deep space dark theme */
-  --color-bg-primary: #080c10;
-  --color-bg-secondary: #0d1217;
-  --color-bg-elevated: #10161c;
-  --color-bg-surface: rgba(16, 22, 28, 0.86);
-  --color-bg-surface-hover: rgba(255, 255, 255, 0.065);
+  /* Color palette - Deep Space Cybernetic Theme */
+  --color-bg-primary: #04070a;
+  --color-bg-secondary: #080d14;
+  --color-bg-elevated: #0d1520;
+  --color-bg-surface: rgba(13, 21, 32, 0.82);
+  --color-bg-surface-hover: rgba(255, 255, 255, 0.08);
+
+  /* Status and Brand Accent Colors */
+  --color-accent: #6cd3ff;
+  --color-accent-subtle: rgba(108, 211, 255, 0.12);
+  --color-accent-glow: rgba(108, 211, 255, 0.35);
+
+  --color-success: #3ee5a3;
+  --color-success-subtle: rgba(62, 229, 163, 0.12);
+  --color-success-glow: rgba(62, 229, 163, 0.35);
+
+  --color-warning: #ffbd59;
+  --color-warning-subtle: rgba(255, 189, 89, 0.12);
+  --color-warning-glow: rgba(255, 189, 89, 0.35);
+
+  --color-danger: #ff6c87;
+  --color-danger-subtle: rgba(255, 108, 135, 0.12);
+  --color-danger-glow: rgba(255, 108, 135, 0.35);
 
   /* Text colors */
-  --color-text-primary: #f3f8fc;
-  --color-text-secondary: #b9c8d3;
-  --color-text-tertiary: #8a9bab;
-  --color-text-muted: #6b7d8e;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #94a3b8;
+  --color-text-muted: #64748b;
 
-  /* Accent colors */
-  --color-accent: #91d8ff;
-  --color-accent-subtle: rgba(145, 216, 255, 0.15);
-  --color-accent-glow: rgba(145, 216, 255, 0.3);
+  /* Border styling */
+  --color-border: rgba(203, 213, 225, 0.1);
+  --color-border-hover: rgba(203, 213, 225, 0.18);
+  --color-border-accent: rgba(108, 211, 255, 0.3);
 
-  /* Border */
-  --color-border: rgba(215, 225, 234, 0.13);
-  --color-border-hover: rgba(215, 225, 234, 0.22);
-  --color-border-accent: rgba(145, 216, 255, 0.3);
+  /* Shadow & Cyberglow systems */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.65);
+  --shadow-xl: 0 34px 120px rgba(0, 0, 0, 0.85);
 
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.16);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.24);
-  --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.34);
-  --shadow-xl: 0 34px 120px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 24px rgba(145, 216, 255, 0.12);
+  /* Modern Neon Glow Effects */
+  --glow-accent: 0 0 25px rgba(108, 211, 255, 0.22);
+  --glow-success: 0 0 25px rgba(62, 229, 163, 0.22);
+  --glow-warning: 0 0 25px rgba(255, 189, 89, 0.22);
+  --glow-danger: 0 0 25px rgba(255, 108, 135, 0.22);
 
   /* Border radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
   --radius-pill: 999px;
 
   /* Spacing scale */
@@ -45,18 +62,21 @@
   --space-2xl: 32px;
 
   /* Typography */
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
-  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --font-sans: "Outfit", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  --font-mono: "Fira Code", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
   /* Transitions */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
-  --duration-slow: 400ms;
+  --duration-fast: 120ms;
+  --duration-normal: 220ms;
+  --duration-slow: 380ms;
 
-  /* Glass effect */
-  --glass-bg: rgba(255, 255, 255, 0.045);
-  --glass-border: rgba(215, 225, 234, 0.12);
-  --glass-blur: blur(18px);
+  /* Premium Glassmorphic system */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-dense: rgba(8, 13, 20, 0.75);
+  --glass-bg-accent: rgba(108, 211, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(16px);
+  --glass-blur-heavy: blur(28px);
 }

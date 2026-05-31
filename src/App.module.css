@@ -4,35 +4,25 @@
   height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(circle at 48% -10%, rgba(117, 152, 190, 0.24), transparent 34%),
-    linear-gradient(145deg, #080c10 0%, #101820 46%, #080a0c 100%);
+    radial-gradient(circle at 50% -20%, rgba(108, 211, 255, 0.16), transparent 48%),
+    radial-gradient(circle at 10% 90%, rgba(62, 229, 163, 0.05), transparent 30%),
+    linear-gradient(rgba(108, 211, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108, 211, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(145deg, #020406 0%, #080e15 50%, #030508 100%);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px, 100% 100%;
 }
 
 .toolbar {
   position: absolute;
-  right: 18px;
-  bottom: 18px;
-  z-index: 6;
-  width: 42px;
-  height: 42px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 99;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-}
-
-.toolbarActions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.statusDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #62d6a7;
-  box-shadow: 0 0 16px rgba(98, 214, 167, 0.72);
 }
 
 .controlDock {
@@ -43,39 +33,45 @@
 .controlToggle,
 .toolbarActions button,
 .recordSwitch {
-  height: 32px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 0 11px;
-  border: 1px solid rgba(216, 226, 235, 0.16);
-  border-radius: 8px;
-  color: #d9e3eb;
-  background: rgba(255, 255, 255, 0.055);
+  gap: 8px;
+  padding: 0 14px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
   cursor: pointer;
-  transition: border-color 200ms ease, background 200ms ease, transform 150ms ease;
+  font-size: 13px;
+  font-weight: 550;
+  transition: all var(--duration-normal) var(--ease-out);
 }
 
 .controlToggle:hover,
 .toolbarActions button:hover,
 .recordSwitch:hover {
-  border-color: rgba(216, 226, 235, 0.28);
-  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(108, 211, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-primary);
+  transform: translateY(-1px);
 }
 
 .controlToggle {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   justify-content: center;
-  border-radius: 50%;
-  background: rgba(8, 12, 16, 0.64) !important;
-  backdrop-filter: blur(16px);
-  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+  border-radius: var(--radius-pill);
+  background: rgba(8, 14, 22, 0.8) !important;
+  border: 1px solid rgba(108, 211, 255, 0.2);
+  box-shadow: var(--shadow-md), 0 0 15px rgba(108, 211, 255, 0.1);
 }
 
 .controlToggle:hover {
-  transform: scale(1.06);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+  transform: scale(1.08) rotate(5deg);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-lg), var(--glow-accent);
 }
 
 .controlToggle span {
@@ -89,17 +85,17 @@
 .toolbarActions {
   position: absolute;
   right: 0;
-  bottom: 52px;
-  width: 310px;
+  bottom: 58px;
+  width: 320px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 9px;
-  padding: 14px;
-  border: 1px solid rgba(216, 226, 235, 0.14);
-  border-radius: 14px;
-  background: rgba(8, 12, 16, 0.92);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid rgba(108, 211, 255, 0.15);
+  border-radius: var(--radius-lg);
+  background: rgba(6, 10, 16, 0.94);
+  backdrop-filter: var(--glass-blur-heavy);
+  box-shadow: var(--shadow-xl), 0 0 40px rgba(108, 211, 255, 0.06);
 }
 
 .stageStatus {
@@ -107,12 +103,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  height: 30px;
-  color: #8fc8ff;
+  gap: 10px;
+  height: 32px;
+  color: var(--color-accent);
   font-size: 13px;
-  font-weight: 650;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 4px;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-success);
+  box-shadow: var(--glow-success);
+  animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
 
 .toolbarActions > button,
@@ -125,43 +143,56 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 10px;
+}
+
+.jumpGrid button {
+  height: 30px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  padding: 0 6px;
 }
 
 .recordSwitch input {
-  accent-color: #7fcdb6;
+  accent-color: var(--color-success);
+  margin-right: 4px;
+  cursor: pointer;
 }
 
 .nextStepButton {
-  color: #071014 !important;
-  background: linear-gradient(135deg, #91d8ff, #7fcdb6) !important;
-  font-weight: 760;
-  box-shadow: 0 2px 8px rgba(145, 216, 255, 0.2);
+  color: #03070c !important;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-success)) !important;
+  border: none !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(108, 211, 255, 0.25);
 }
 
-.nextStepButton span {
-  color: rgba(7, 16, 20, 0.68);
-  font-size: 11px;
-  font-weight: 650;
+.nextStepButton:hover {
+  transform: translateY(-1.5px) !important;
+  box-shadow: 0 6px 20px rgba(108, 211, 255, 0.4), 0 0 10px rgba(62, 229, 163, 0.2);
 }
 
 .stage {
   position: absolute;
   inset: 0;
-  padding: 22px;
+  padding: 24px;
 }
 
 @media (max-width: 860px) {
   .toolbar {
-    right: 10px;
-    bottom: 10px;
+    right: 16px;
+    bottom: 16px;
   }
 
   .toolbarActions {
-    width: min(310px, calc(100vw - 20px));
+    width: min(320px, calc(100vw - 32px));
+    padding: 14px;
   }
 
   .stage {
-    padding: 10px;
+    padding: 12px;
   }
-
 }
