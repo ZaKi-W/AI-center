@@ -41,7 +41,7 @@ export function DimensionTransition({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
       >
-        <span>聊天机器人(ChatBOT)的气泡正在变成任务流</span>
+        <span>ChatBOT 的气泡正在变成任务流</span>
         <h1>进入 Agent 世界</h1>
         <p>接下来会出现任务窗口、终端、文件树和浏览器面板，AI 不只回答，而是开始执行。</p>
         <button type="button" onClick={onContinue}>

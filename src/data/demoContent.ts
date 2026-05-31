@@ -6,8 +6,6 @@ export type AppStage =
   | 'model-select'
   | 'agent-workbench'
   | 'token-restore'
-  | 'skill-demo'
-  | 'mcp-demo'
   | 'summary';
 export type ChatStepKind = 'qa' | 'image' | 'thinking' | 'boundary' | 'hook';
 export type FileTaskStepKind = 'scan' | 'read' | 'classify' | 'create' | 'rename' | 'move' | 'complete';
@@ -77,6 +75,8 @@ export type TokenDemo = {
   subtitle: string;
   pausedMessage: string;
   restoreButton: string;
+  exhaustedTokens: number;
+  restoredTokens: number;
   facts: string[];
 };
 
@@ -129,8 +129,6 @@ export const appStages: AppStage[] = [
   'model-select',
   'agent-workbench',
   'token-restore',
-  'skill-demo',
-  'mcp-demo',
   'summary',
 ];
 export const defaultAgentId = 'codex';
@@ -436,13 +434,15 @@ export const fileTaskSteps: FileTaskStep[] = [
 
 export const tokenDemo: TokenDemo = {
   title: 'Token 是 AI 处理信息时消耗的单位',
-  subtitle: '输入越长、输出越多、任务越复杂，消耗通常越大。',
+  subtitle: '这次任务已经消耗 1,000,000 token，恢复后会补充 10,000,000 token 继续演示。',
   pausedMessage: 'Token 不足，任务已暂停。',
-  restoreButton: '恢复任务能量',
+  restoreButton: '补充 10,000,000 token',
+  exhaustedTokens: 1_000_000,
+  restoredTokens: 10_000_000,
   facts: [
-    'Agent 执行多步骤任务时，也会持续消耗 Token。',
+    'Agent 执行多步骤任务时，会持续消耗 Token。',
     '任务暂停不是失败，而是当前演示资源已经用完。',
-    '恢复后，Agent 会从暂停位置继续执行。',
+    '补充后，Agent 可以继续接收新的复杂任务。',
   ],
 };
 
@@ -458,7 +458,7 @@ export const skillDemo: SkillDemo = {
   ],
   plainResult: {
     title: '普通输出',
-    content: '大家好，今天我们来聊一聊聊天机器人(ChatBOT)和 Agent 的区别。聊天机器人(ChatBOT)可以回答问题，Agent 可以执行任务。',
+    content: '大家好，今天我们来聊一聊 ChatBOT 和 Agent 的区别。ChatBOT 可以回答问题，Agent 可以执行任务。',
     tags: ['语言泛泛', '开头不够抓人', '缺少短视频钩子'],
   },
   skilledResult: {
@@ -470,32 +470,32 @@ export const skillDemo: SkillDemo = {
 };
 
 export const mcpDemo: MCPDemo = {
-  title: 'MCP：让 Agent 连接工具的统一接口',
-  task: '现在让 Agent 使用一个专业工具，把报名表结果同步到数据表工具。',
-  failureLog: '工具接口不兼容，无法继续。',
-  explanation: '可以把 MCP 理解成一个标准插座，工具接进来，Agent 才更容易使用。',
-  successLog: '工具状态已在线，Agent 已完成数据表同步。',
+  title: 'MCP：让 Agent 稳定连接外部工具',
+  task: '把刚整理好的报名表名单，自动同步到在线表格里，方便老师直接查看。',
+  failureLog: 'Agent 找不到在线表格的统一入口，只能停在“请手动复制粘贴”。',
+  explanation: '可以把 MCP 理解成工具的统一插座。在线表格、知识库、代码仓库都接到同一种接口后，Agent 才知道怎么稳定使用它们。',
+  successLog: 'MCP 已连接在线表格，Agent 已把三份报名表结果同步成一张可查看的名单。',
   connectButton: '连接 MCP',
   tools: [
-    { id: 'sheet-tool', name: '数据表工具' },
+    { id: 'sheet-tool', name: '在线表格' },
     { id: 'knowledge-tool', name: '知识库工具' },
     { id: 'repo-tool', name: '代码仓库工具' },
   ],
 };
 
 export const summaryItems: SummaryItem[] = [
-  { term: '聊天机器人(ChatBOT)', description: '负责对话。' },
-  { term: 'Agent', description: '负责执行任务。' },
-  { term: 'Model', description: '负责理解和生成。' },
-  { term: 'Token', description: 'AI 工作时消耗的单位。' },
-  { term: 'Skill', description: '让 Agent 更专业。' },
-  { term: 'MCP', description: '让 Agent 更容易连接工具。' },
+  { term: 'ChatBOT（聊天机器人）', description: '负责对话。' },
+  { term: 'Agent（智能体）', description: '负责执行任务。' },
+  { term: 'Model（大模型）', description: '负责理解和生成。' },
+  { term: 'Token（词元）', description: 'AI 工作时消耗的单位。' },
+  { term: 'Skill（技能）', description: '让 Agent 更专业。' },
+  { term: 'MCP（模型上下文协议）', description: '让 Agent 更容易连接工具。' },
 ];
 
 export const stageSubtitles = [
   '先从你最熟悉的聊天 AI 开始。',
-  '这类聊天 AI，就是聊天机器人(ChatBOT)。',
-  '聊天机器人(ChatBOT)会回答，也能理解图片。',
+  '这类聊天 AI，就是 ChatBOT。',
+  'ChatBOT 会回答，也能理解图片。',
   '但它不能直接替你操作电脑。',
   '你需要更高维度的力量。',
 ];
@@ -506,7 +506,7 @@ export const chatScript: ChatScriptStep[] = [
     kind: 'qa',
     prompt: '用大白话解释一下什么是 AI Agent。',
     reply: '可以把 Agent 理解成会自己拆步骤、尝试完成任务的 AI 助手。',
-    caption: '聊天机器人(ChatBOT)擅长把问题讲清楚。',
+    caption: 'ChatBOT 擅长把问题讲清楚。',
     thinkingStates: ['思考中...', '正在组织解释方式...'],
   },
   {
@@ -522,7 +522,7 @@ export const chatScript: ChatScriptStep[] = [
     id: 'thinking-demo',
     kind: 'thinking',
     prompt: '帮我规划一下今天学习 AI 的顺序。',
-    reply: '建议先理解聊天机器人(ChatBOT)，再认识 Agent，然后看 Model、Token、Skill 和 MCP 如何组成完整工作流。',
+    reply: '建议先理解 ChatBOT，再认识 Agent，然后看 Model、Token、Skill 和 MCP 如何组成完整工作流。',
     caption: '思考状态让生成过程更像真实产品。',
     thinkingStates: ['正在拆解任务...', '生成学习路径...', '压缩成口播节奏...'],
   },
@@ -531,7 +531,7 @@ export const chatScript: ChatScriptStep[] = [
     kind: 'boundary',
     prompt: '帮我把桌面上的报名表按班级分类，重命名后放进文件夹。',
     reply: '不支持操作文件，但我可以告诉你怎么做。',
-    caption: '聊天机器人(ChatBOT)能给建议，不能接管本地文件。',
+    caption: 'ChatBOT 能给建议，不能接管本地文件。',
     thinkingStates: ['尝试理解文件任务...', '检查可执行权限...'],
   },
   {

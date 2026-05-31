@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, FileSpreadsheet, Image, Lock, Send, Sparkles } from 'lucide-react';
 import { chatScript, type ChatScriptStep } from '../data/demoContent';
@@ -32,7 +32,7 @@ const stepDurations: Record<ChatScriptStep['kind'], number> = {
 const capabilityExplainers: Record<ChatScriptStep['kind'], { title: string; description: string; tone?: 'warning' }> = {
   qa: {
     title: '问答能力',
-    description: '聊天机器人(ChatBOT)可以把概念讲清楚，适合回答问题、解释知识。',
+    description: 'ChatBOT 可以把概念讲清楚，适合回答问题、解释知识。',
   },
   image: {
     title: '图文理解能力',
@@ -43,7 +43,7 @@ const capabilityExplainers: Record<ChatScriptStep['kind'], { title: string; desc
     description: '它会把问题拆成步骤，给出学习路径、计划或建议。',
   },
   boundary: {
-    title: '重点：聊天机器人(ChatBOT)不能操作电脑文件',
+    title: '重点：ChatBOT 不能操作电脑文件',
     description: '它可以告诉你怎么整理，但不能直接接管本地桌面、重命名文件或移动文件。',
     tone: 'warning',
   },
@@ -56,11 +56,11 @@ const capabilityExplainers: Record<ChatScriptStep['kind'], { title: string; desc
 const manualExplainers: Record<ManualOverlayKey, { title: string; description: string; tone?: 'warning' }> = {
   intro: {
     title: '先从你最熟悉的聊天机器人开始',
-    description: '它最典型的工作方式，就是你问一句，它答一句。',
+    description: '它最典型的工作方式，就是你问一句，它答一句。比如 DeepSeek 就是一个标准的聊天机器人。',
   },
   image: {
-    title: '图文理解能力',
-    description: '除了文字，它也可以看图片、截图和表格，并总结里面的信息。',
+    title: '文件理解能力',
+    description: '除了文字，它也可以看图片、表格和文档，并总结里面的信息。',
   },
   thinking: {
     title: '思考能力',
@@ -68,7 +68,7 @@ const manualExplainers: Record<ManualOverlayKey, { title: string; description: s
   },
   'file-action': {
     title: '文件操纵能力',
-    description: '接下来试着让聊天机器人(ChatBOT)整理电脑里的报名表。',
+    description: '接下来试着让 ChatBOT 整理电脑里的报名表。',
   },
   'file-unsupported': {
     title: '聊天机器人不支持对电脑文件的操纵',
@@ -107,8 +107,11 @@ export function ChatbotSimulator({ recordingMode, playbackMode, advanceSignal, o
   const [typingPrompt, setTypingPrompt] = useState('');
   const [replyDraft, setReplyDraft] = useState('');
   const [thinkingIndex, setThinkingIndex] = useState(0);
+  const [manualReplyPending, setManualReplyPending] = useState(false);
   const [showExplainer, setShowExplainer] = useState(true);
   const [manualOverlayKey, setManualOverlayKey] = useState<ManualOverlayKey>('intro');
+  const manualTimeoutsRef = useRef<number[]>([]);
+  const manualThinkingTimerRef = useRef<number | undefined>(undefined);
   const activeStep = chatScript[stepIndex];
   const typedPrompt = useTypewriter(typingPrompt, 18);
   const typedReply = useTypewriter(replyDraft, 18);
@@ -122,14 +125,80 @@ export function ChatbotSimulator({ recordingMode, playbackMode, advanceSignal, o
   const hasActiveUserMessage = messages.some((message) => message.id === activeUserMessageId);
   const hasActiveAssistantMessage = messages.some((message) => message.id === activeAssistantMessageId);
 
+  const clearManualTimers = useCallback(() => {
+    manualTimeoutsRef.current.forEach((timer) => window.clearTimeout(timer));
+    manualTimeoutsRef.current = [];
+    if (manualThinkingTimerRef.current !== undefined) {
+      window.clearInterval(manualThinkingTimerRef.current);
+      manualThinkingTimerRef.current = undefined;
+    }
+  }, []);
+
+  const startManualExchange = useCallback((step: ChatScriptStep) => {
+    const userMessageId = `${step.id}-user`;
+    const assistantMessageId = `${step.id}-assistant`;
+    const thinkingStates = step.thinkingStates ?? ['思考中...'];
+    const thinkingDuration = Math.min(1800, thinkingStates.length * 780 + 260);
+    const replyDuration = Math.min(2200, step.reply.length * 18 + 450);
+
+    clearManualTimers();
+    setManualReplyPending(true);
+    setThinkingIndex(0);
+    setTypingPrompt('');
+    setReplyDraft('');
+    setMessages((current) => {
+      if (current.some((message) => message.id === userMessageId)) return current;
+      return [
+        ...current,
+        {
+          id: userMessageId,
+          role: 'user',
+          text: step.prompt,
+          imageTitle: step.imageTitle,
+        },
+      ];
+    });
+
+    manualThinkingTimerRef.current = window.setInterval(() => {
+      setThinkingIndex((current) => {
+        return current + 1 >= thinkingStates.length ? current : current + 1;
+      });
+    }, 780);
+
+    const replyTimer = window.setTimeout(() => {
+      if (manualThinkingTimerRef.current !== undefined) {
+        window.clearInterval(manualThinkingTimerRef.current);
+        manualThinkingTimerRef.current = undefined;
+      }
+      setReplyDraft(step.reply);
+    }, thinkingDuration);
+
+    const commitTimer = window.setTimeout(() => {
+      setMessages((current) => {
+        if (current.some((message) => message.id === assistantMessageId)) return current;
+        return [...current, { id: assistantMessageId, role: 'assistant', text: step.reply }];
+      });
+      setReplyDraft('');
+      setManualReplyPending(false);
+    }, thinkingDuration + replyDuration);
+
+    manualTimeoutsRef.current = [replyTimer, commitTimer];
+  }, [clearManualTimers]);
+
   useEffect(() => {
     setStepIndex(0);
     setMessages([]);
   }, []);
 
   useEffect(() => {
+    return () => clearManualTimers();
+  }, [clearManualTimers]);
+
+  useEffect(() => {
     const step = chatScript[stepIndex];
     const explainerDuration = step.kind === 'boundary' ? 2600 : 2200;
+    clearManualTimers();
+    setManualReplyPending(false);
     setThinkingIndex(0);
     setTypingPrompt('');
     setReplyDraft('');
@@ -203,7 +272,7 @@ export function ChatbotSimulator({ recordingMode, playbackMode, advanceSignal, o
       if (nextTimer) window.clearTimeout(nextTimer);
       if (explainerTimer) window.clearTimeout(explainerTimer);
     };
-  }, [onEnterAgentWorld, playbackMode, stepIndex]);
+  }, [clearManualTimers, onEnterAgentWorld, playbackMode, stepIndex]);
 
   useManualAdvance(playbackMode, advanceSignal, () => {
     if (showHook) {
@@ -220,20 +289,12 @@ export function ChatbotSimulator({ recordingMode, playbackMode, advanceSignal, o
       return;
     }
 
+    if (manualReplyPending || replyDraft) {
+      return;
+    }
+
     if (!hasActiveUserMessage) {
-      setMessages((current) => {
-        if (current.some((message) => message.id === activeUserMessageId)) return current;
-        return [
-          ...current,
-          {
-            id: activeUserMessageId,
-            role: 'user',
-            text: activeStep.prompt,
-            imageTitle: activeStep.imageTitle,
-          },
-        ];
-      });
-      setTypingPrompt('');
+      startManualExchange(activeStep);
       return;
     }
 
@@ -267,6 +328,18 @@ export function ChatbotSimulator({ recordingMode, playbackMode, advanceSignal, o
     const states = activeStep.thinkingStates ?? ['思考中...'];
     return states[Math.min(thinkingIndex, states.length - 1)];
   }, [activeStep.thinkingStates, thinkingIndex]);
+  const visibleMessages = useMemo(() => {
+    if (!replyDraft) return messages;
+    if (messages.some((message) => message.id === activeAssistantMessageId)) return messages;
+    return [
+      ...messages,
+      {
+        id: activeAssistantMessageId,
+        role: 'assistant' as const,
+        text: typedReply,
+      },
+    ];
+  }, [activeAssistantMessageId, messages, replyDraft, typedReply]);
 
   return (
     <div className={`${styles.simulator} ${recordingMode ? styles.recordingMode : ''}`}>
@@ -289,12 +362,12 @@ export function ChatbotSimulator({ recordingMode, playbackMode, advanceSignal, o
             <span>先从你最熟悉的聊天 AI 开始。</span>
           </div>
 
-          {messages.map((message) => (
+          {visibleMessages.map((message) => (
             <motion.article
               key={message.id}
               className={`${styles.message} ${styles[message.role]}`}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
               {message.imageTitle ? (
                 <div className={styles.uploadChip}>
@@ -305,19 +378,6 @@ export function ChatbotSimulator({ recordingMode, playbackMode, advanceSignal, o
               <p>{message.text}</p>
             </motion.article>
           ))}
-
-          <AnimatePresence>
-            {replyDraft ? (
-              <motion.article
-                className={`${styles.message} ${styles.assistant}`}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-              >
-                <p>{typedReply}</p>
-              </motion.article>
-            ) : null}
-          </AnimatePresence>
 
           {activeStep.kind !== 'hook' && hasActiveUserMessage && !hasActiveAssistantMessage && !replyDraft ? (
             <motion.div className={styles.thinkingPill} layout>
@@ -335,7 +395,7 @@ export function ChatbotSimulator({ recordingMode, playbackMode, advanceSignal, o
             </motion.div>
           ) : null}
           <div className={styles.inputBox}>
-            <span>{typedPrompt || (playbackMode === 'manual' ? '按下一步发送这句话...' : '等待下一段演示...')}</span>
+            <span>{typedPrompt || (playbackMode === 'manual' ? '准备发送这句话...' : '等待下一段演示...')}</span>
             <button type="button" aria-label="发送演示消息">
               <Send size={16} />
             </button>

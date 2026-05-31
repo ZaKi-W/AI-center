@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
 import { BatteryWarning, CheckCircle2, Gauge, PauseCircle, RotateCw } from 'lucide-react';
 import { agentOptions, modelOptions, tokenDemo } from '../data/demoContent';
 import { useManualAdvance } from '../hooks/useManualAdvance';
@@ -22,6 +21,8 @@ export function TokenRestorePanel({
 }: TokenRestorePanelProps) {
   const selectedAgent = agentOptions.find((agent) => agent.id === selectedAgentId) ?? agentOptions[1];
   const selectedModel = modelOptions.find((model) => model.id === selectedModelId) ?? modelOptions[0];
+  const exhaustedTokenLabel = tokenDemo.exhaustedTokens.toLocaleString('en-US');
+  const restoredTokenLabel = tokenDemo.restoredTokens.toLocaleString('en-US');
 
   useManualAdvance(playbackMode, advanceSignal, onRestore);
 
@@ -48,10 +49,17 @@ export function TokenRestorePanel({
           <code>$ report --summary 文件整理完成</code>
           <code className={styles.blink}>_</code>
         </div>
-        <div className={styles.emptyMeter}>
-          <span>演示 Token</span>
-          <i><b /></i>
-          <strong>0%</strong>
+        <div className={styles.tokenCounter}>
+          <div>
+            <span>已消耗</span>
+            <strong>{exhaustedTokenLabel}</strong>
+            <small>token</small>
+          </div>
+          <div>
+            <span>剩余</span>
+            <strong>0</strong>
+            <small>token</small>
+          </div>
         </div>
         <div className={styles.pauseSeal}>
           <BatteryWarning size={28} />
@@ -71,6 +79,11 @@ export function TokenRestorePanel({
         </span>
         <h1>{tokenDemo.title}</h1>
         <p>{tokenDemo.subtitle}</p>
+        <div className={styles.restoreAmount}>
+          <span>本次补充</span>
+          <strong>+ {restoredTokenLabel}</strong>
+          <small>token</small>
+        </div>
         <div className={styles.factList}>
           {tokenDemo.facts.map((fact) => (
             <span key={fact}>

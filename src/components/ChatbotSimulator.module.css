@@ -12,7 +12,7 @@
 .contextPanel {
   min-height: 0;
   border: 1px solid rgba(215, 225, 234, 0.13);
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgba(13, 18, 23, 0.86);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
   backdrop-filter: blur(18px);
@@ -178,8 +178,8 @@
 .message {
   max-width: 78%;
   border: 1px solid rgba(215, 225, 234, 0.1);
-  border-radius: 14px;
-  padding: 12px 14px;
+  border-radius: 16px;
+  padding: 12px 16px;
   line-height: 1.62;
   font-size: 15px;
 }
@@ -190,25 +190,30 @@
 
 .user {
   align-self: flex-end;
-  border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 4px;
   color: #061014;
-  background: #d7e8ef;
+  background: linear-gradient(135deg, #d7e8ef, #c4ddef);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .assistant {
   align-self: flex-start;
-  border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 4px;
   color: #deebf4;
   background: rgba(35, 48, 58, 0.92);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
 }
 
 .thinkingPill {
   align-self: flex-start;
-  padding: 8px 11px;
+  padding: 8px 14px;
   border-radius: 999px;
   color: #aab8c4;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .thinkingPill span {
@@ -217,6 +222,12 @@
   border-radius: 50%;
   background: #73d0a9;
   box-shadow: 0 0 12px rgba(115, 208, 169, 0.8);
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
 .inputDock {
@@ -244,6 +255,12 @@
   padding: 0 8px 0 15px;
   color: #dbe6ee;
   background: rgba(255, 255, 255, 0.055);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.inputBox:focus-within {
+  border-color: rgba(145, 216, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(145, 216, 255, 0.08);
 }
 
 .inputBox button {
@@ -254,7 +271,14 @@
   border: 0;
   border-radius: 8px;
   color: #071114;
-  background: #80d2b3;
+  background: linear-gradient(135deg, #80d2b3, #67c986);
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.inputBox button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 2px 8px rgba(128, 210, 179, 0.3);
 }
 
 .contextPanel {
@@ -402,10 +426,18 @@
   margin-top: 14px;
   border: 0;
   border-radius: 10px;
-  padding: 13px 18px;
+  padding: 13px 22px;
   color: #071014;
-  background: #91d8ff;
+  background: linear-gradient(135deg, #91d8ff, #7fcdb6);
   font-weight: 700;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+  box-shadow: 0 4px 16px rgba(145, 216, 255, 0.24);
+}
+
+.agentHook button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(145, 216, 255, 0.36);
 }
 
 .recordingMode .message,

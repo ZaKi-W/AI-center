@@ -12,8 +12,7 @@ const jumpTargets: Array<{ label: string; stage: AppStage }> = [
   { label: '跳到聊天机器人', stage: 'chatbot' },
   { label: '跳到 Agent', stage: 'agent-select' },
   { label: '跳到 Token', stage: 'token-restore' },
-  { label: '跳到 Skill', stage: 'skill-demo' },
-  { label: '跳到 MCP', stage: 'mcp-demo' },
+  { label: '跳到 Skill / MCP', stage: 'agent-workbench' },
 ];
 
 export function SummaryPage({ onReplay, onJump }: SummaryPageProps) {
@@ -21,8 +20,8 @@ export function SummaryPage({ onReplay, onJump }: SummaryPageProps) {
     <div className={styles.summaryStage}>
       <header>
         <span>Workflow Recap</span>
-        <h1>聊天机器人(ChatBOT) → Agent → Model → Token → Skill → MCP</h1>
-        <p>你平时用的是聊天机器人(ChatBOT)。真正进入工作流时，你会遇到 Agent、Model、Token、Skill 和 MCP。</p>
+        <h1>ChatBOT → Agent → Model → Token → Skill → MCP</h1>
+        <p>你平时用的是 ChatBOT。真正进入工作流时，你会遇到 Agent、Model、Token、Skill 和 MCP。</p>
       </header>
 
       <section className={styles.chain}>

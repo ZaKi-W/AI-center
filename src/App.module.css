@@ -52,6 +52,15 @@
   border-radius: 8px;
   color: #d9e3eb;
   background: rgba(255, 255, 255, 0.055);
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease, transform 150ms ease;
+}
+
+.controlToggle:hover,
+.toolbarActions button:hover,
+.recordSwitch:hover {
+  border-color: rgba(216, 226, 235, 0.28);
+  background: rgba(255, 255, 255, 0.09);
 }
 
 .controlToggle {
@@ -61,6 +70,12 @@
   border-radius: 50%;
   background: rgba(8, 12, 16, 0.64) !important;
   backdrop-filter: blur(16px);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+}
+
+.controlToggle:hover {
+  transform: scale(1.06);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
 }
 
 .controlToggle span {
@@ -79,12 +94,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 9px;
-  padding: 12px;
+  padding: 14px;
   border: 1px solid rgba(216, 226, 235, 0.14);
-  border-radius: 12px;
-  background: rgba(8, 12, 16, 0.86);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+  border-radius: 14px;
+  background: rgba(8, 12, 16, 0.92);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
 }
 
 .stageStatus {
@@ -97,6 +112,7 @@
   color: #8fc8ff;
   font-size: 13px;
   font-weight: 650;
+  letter-spacing: 0.02em;
 }
 
 .toolbarActions > button,
@@ -117,8 +133,9 @@
 
 .nextStepButton {
   color: #071014 !important;
-  background: #91d8ff !important;
+  background: linear-gradient(135deg, #91d8ff, #7fcdb6) !important;
   font-weight: 760;
+  box-shadow: 0 2px 8px rgba(145, 216, 255, 0.2);
 }
 
 .nextStepButton span {

@@ -3,8 +3,7 @@
   max-width: 1480px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(420px, 1fr) 360px;
-  gap: 18px;
+  grid-template-columns: 1fr;
   overflow: hidden;
   border: 1px solid rgba(215, 225, 234, 0.13);
   border-radius: 14px;
@@ -14,38 +13,32 @@
     linear-gradient(145deg, rgba(8, 12, 16, 0.98), rgba(13, 18, 23, 0.96));
 }
 
-.heroPanel,
-.flowPreview {
+.heroPanel {
   border: 1px solid rgba(215, 225, 234, 0.13);
   border-radius: 12px;
   background: rgba(16, 22, 28, 0.86);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(12px);
 }
 
 .heroPanel {
   display: grid;
   align-content: center;
   justify-items: start;
-  gap: 18px;
+  gap: 20px;
   padding: clamp(28px, 5vw, 72px);
-}
-
-.kicker,
-.flowPreview > span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #91d8ff;
-  font-size: 13px;
 }
 
 .heroPanel h1 {
   max-width: 760px;
   margin: 0;
-  color: #f3f8fc;
+  background: linear-gradient(135deg, #f3f8fc 0%, #91d8ff 50%, #7fcdb6 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: clamp(42px, 6vw, 78px);
   line-height: 1.08;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
 }
 
 .heroPanel p {
@@ -62,48 +55,27 @@
   gap: 9px;
   border: 0;
   border-radius: 10px;
-  padding: 14px 18px;
+  padding: 14px 22px;
   color: #071014;
-  background: #91d8ff;
+  background: linear-gradient(135deg, #91d8ff, #7fcdb6);
   font-weight: 800;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+  box-shadow: 0 4px 16px rgba(145, 216, 255, 0.24);
 }
 
-.heroPanel small {
-  color: #8fa0ad;
+.heroPanel button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(145, 216, 255, 0.36);
 }
 
-.flowPreview {
-  display: grid;
-  align-content: center;
-  gap: 10px;
-  padding: 22px;
-}
-
-.flowPreview div {
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid rgba(215, 225, 234, 0.1);
-  border-radius: 9px;
-  padding: 11px;
-  background: rgba(255, 255, 255, 0.045);
-}
-
-.flowPreview i {
-  color: #91d8ff;
-  font-style: normal;
-  font-weight: 800;
-}
-
-.flowPreview strong {
-  color: #e5eef5;
+.heroPanel button:active {
+  transform: translateY(0);
 }
 
 @media (max-width: 860px) {
   .introStage {
     height: calc(100vh - 110px);
-    grid-template-columns: 1fr;
     overflow: auto;
     padding: 14px;
   }

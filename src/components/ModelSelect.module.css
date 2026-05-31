@@ -213,10 +213,18 @@
   gap: 8px;
   border: 0;
   border-radius: 9px;
-  padding: 12px 15px;
+  padding: 12px 18px;
   color: #071014;
   background: var(--agent-color);
   font-weight: 780;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--agent-color) 30%, transparent);
+}
+
+.embedPanel button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--agent-color) 40%, transparent);
 }
 
 .modelCatalog {
@@ -277,17 +285,21 @@
   gap: 14px;
   align-items: start;
   border: 1px solid rgba(218, 228, 238, 0.12);
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 12px;
   color: #dce7ef;
   text-align: left;
   background: rgba(255, 255, 255, 0.045);
   overflow: visible;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease, transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modelRow:hover {
   border-color: color-mix(in srgb, var(--agent-color) 42%, rgba(218, 228, 238, 0.12));
   background: color-mix(in srgb, var(--agent-color) 7%, rgba(255, 255, 255, 0.045));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .modelRowTop {
@@ -321,6 +333,12 @@
   box-shadow: 0 14px 38px color-mix(in srgb, var(--agent-color) 18%, transparent);
   font-size: 20px;
   font-weight: 900;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+}
+
+.modelRow:hover .modelLogo {
+  transform: scale(1.05);
+  box-shadow: 0 18px 46px color-mix(in srgb, var(--agent-color) 28%, transparent);
 }
 
 .rankBadge {

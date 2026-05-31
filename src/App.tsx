@@ -6,9 +6,7 @@ import { AgentWorkbench } from './components/AgentWorkbench';
 import { ChatbotSimulator } from './components/ChatbotSimulator';
 import { DimensionTransition } from './components/DimensionTransition';
 import { IntroScreen } from './components/IntroScreen';
-import { MCPDemo } from './components/MCPDemo';
 import { ModelSelect } from './components/ModelSelect';
-import { SkillDemo } from './components/SkillDemo';
 import { SummaryPage } from './components/SummaryPage';
 import { TokenRestorePanel } from './components/TokenRestorePanel';
 import { appStages, defaultAgentId, defaultModelId, type AppStage } from './data/demoContent';
@@ -28,15 +26,13 @@ export default function App() {
   const stageLabel = useMemo(() => {
     const labels: Record<AppStage, string> = {
       intro: '00 开场',
-      chatbot: '01 聊天机器人(ChatBOT)',
+      chatbot: '01 ChatBOT',
       transition: '02 进入 Agent 世界',
       'agent-select': '03 Agent 选择',
       'model-select': '04 模型大脑',
       'agent-workbench': '05 Agent 工作台',
       'token-restore': '06 Token 恢复',
-      'skill-demo': '07 Skill 对比',
-      'mcp-demo': '08 MCP 连接',
-      summary: '09 总结',
+      summary: '07 总结',
     };
     return labels[stage];
   }, [stage]);
@@ -107,7 +103,6 @@ export default function App() {
                 {playbackMode === 'manual' ? (
                   <button type="button" className={styles.nextStepButton} onClick={advanceManualStep}>
                     下一步
-                    <span>Space / Enter / →</span>
                   </button>
                 ) : null}
                 <button type="button" onClick={replay}>
@@ -129,11 +124,7 @@ export default function App() {
                             ? '工作台'
                             : targetStage === 'token-restore'
                               ? 'Token'
-                              : targetStage === 'skill-demo'
-                                ? 'Skill'
-                                : targetStage === 'mcp-demo'
-                                  ? 'MCP'
-                                  : '总结'}
+                              : '总结'}
                     </button>
                   ))}
                 </div>
@@ -204,6 +195,7 @@ export default function App() {
               playbackMode={playbackMode}
               advanceSignal={advanceSignal}
               onTokenDepleted={() => setStage('token-restore')}
+              onComplete={() => setStage('summary')}
             />
           ) : null}
           {stage === 'token-restore' ? (
@@ -214,26 +206,8 @@ export default function App() {
               advanceSignal={advanceSignal}
               onRestore={() => {
                 setTokenRestored(true);
-                setStage('skill-demo');
+                setStage('agent-workbench');
               }}
-            />
-          ) : null}
-          {stage === 'skill-demo' ? (
-            <SkillDemo
-              selectedAgentId={selectedAgentId}
-              selectedModelId={selectedModelId}
-              playbackMode={playbackMode}
-              advanceSignal={advanceSignal}
-              onContinue={() => setStage('mcp-demo')}
-            />
-          ) : null}
-          {stage === 'mcp-demo' ? (
-            <MCPDemo
-              selectedAgentId={selectedAgentId}
-              selectedModelId={selectedModelId}
-              playbackMode={playbackMode}
-              advanceSignal={advanceSignal}
-              onContinue={() => setStage('summary')}
             />
           ) : null}
           {stage === 'summary' ? (

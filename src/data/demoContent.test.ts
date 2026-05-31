@@ -26,8 +26,6 @@ describe('demo content contract', () => {
       'model-select',
       'agent-workbench',
       'token-restore',
-      'skill-demo',
-      'mcp-demo',
       'summary',
     ]);
   });
@@ -137,7 +135,7 @@ describe('demo content contract', () => {
 
   it('defines the token pause and restore copy without transaction language', () => {
     expect(tokenDemo.pausedMessage).toBe('Token 不足，任务已暂停。');
-    expect(tokenDemo.restoreButton).toBe('恢复任务能量');
+    expect(tokenDemo.restoreButton).toBe('补充 10,000,000 token');
     expect(containsBannedTerms([
       tokenDemo.title,
       tokenDemo.subtitle,
@@ -160,20 +158,20 @@ describe('demo content contract', () => {
   });
 
   it('defines mcp as a failed tool connection followed by a unified interface', () => {
-    expect(mcpDemo.tools.map((tool) => tool.name)).toEqual(['数据表工具', '知识库工具', '代码仓库工具']);
-    expect(mcpDemo.failureLog).toContain('工具接口不兼容');
+    expect(mcpDemo.tools.map((tool) => tool.name)).toEqual(['在线表格', '知识库工具', '代码仓库工具']);
+    expect(mcpDemo.failureLog).toContain('请手动复制粘贴');
     expect(mcpDemo.connectButton).toBe('连接 MCP');
-    expect(mcpDemo.successLog).toContain('工具状态已在线');
+    expect(mcpDemo.successLog).toContain('在线表格');
   });
 
   it('summarizes the full concept chain in order', () => {
     expect(summaryItems.map((item) => item.term)).toEqual([
-      '聊天机器人(ChatBOT)',
-      'Agent',
-      'Model',
-      'Token',
-      'Skill',
-      'MCP',
+      'ChatBOT（聊天机器人）',
+      'Agent（智能体）',
+      'Model（大模型）',
+      'Token（词元）',
+      'Skill（技能）',
+      'MCP（模型上下文协议）',
     ]);
   });
 });

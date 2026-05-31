@@ -86,27 +86,42 @@
   animation: blink 0.8s infinite;
 }
 
-.emptyMeter {
+.tokenCounter {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
   padding: 16px;
-  color: #c2ced8;
 }
 
-.emptyMeter i {
-  height: 9px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
+.tokenCounter div,
+.restoreAmount {
+  border: 1px solid rgba(215, 225, 234, 0.11);
+  border-radius: 10px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.045);
 }
 
-.emptyMeter b {
+.tokenCounter span,
+.restoreAmount span {
   display: block;
-  width: 0%;
-  height: 100%;
-  background: #ffc9a8;
+  color: #9fb0bd;
+  font-size: 12px;
+}
+
+.tokenCounter strong,
+.restoreAmount strong {
+  display: block;
+  margin-top: 4px;
+  color: #f3f8fc;
+  font-size: clamp(24px, 2.4vw, 36px);
+  line-height: 1;
+}
+
+.tokenCounter small,
+.restoreAmount small {
+  display: block;
+  margin-top: 5px;
+  color: #8f9eaa;
 }
 
 .pauseSeal {
@@ -157,6 +172,14 @@
   line-height: 1.7;
 }
 
+.restoreAmount {
+  border-color: color-mix(in srgb, var(--agent-color) 34%, rgba(215, 225, 234, 0.11));
+}
+
+.restoreAmount strong {
+  color: color-mix(in srgb, var(--agent-color) 78%, #ffffff);
+}
+
 .factList {
   display: grid;
   gap: 10px;
@@ -174,10 +197,18 @@
   justify-self: start;
   border: 0;
   border-radius: 10px;
-  padding: 13px 16px;
+  padding: 13px 20px;
   color: #071014;
   background: var(--agent-color);
   font-weight: 760;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--agent-color) 30%, transparent);
+}
+
+.restorePanel button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--agent-color) 40%, transparent);
 }
 
 @keyframes blink {
